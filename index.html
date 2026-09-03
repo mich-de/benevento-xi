@@ -2469,5 +2469,63 @@
   });
 })();
 </script>
+
+<script>
+(function () {
+  var overlay = document.createElement('div');
+  overlay.className = 'lightbox no-print';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.innerHTML =
+    '<button type="button" class="lightbox-close" aria-label="Chiudi">×</button>' +
+    '<figure class="lightbox-frame">' +
+      '<img alt="">' +
+      '<figcaption class="lightbox-caption"></figcaption>' +
+    '</figure>';
+  document.body.appendChild(overlay);
+
+  var frameImg = overlay.querySelector('img');
+  var caption = overlay.querySelector('.lightbox-caption');
+  var closeBtn = overlay.querySelector('.lightbox-close');
+  var lastFocused = null;
+
+  function open(img) {
+    lastFocused = document.activeElement;
+    frameImg.src = img.currentSrc || img.src;
+    frameImg.alt = img.alt || '';
+    var fig = img.closest('figure');
+    var cap = fig ? fig.querySelector('figcaption') : null;
+    caption.innerHTML = cap ? cap.innerHTML : '';
+    overlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function close() {
+    overlay.classList.remove('is-open');
+    frameImg.src = '';
+    document.body.style.overflow = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  document.querySelectorAll('.shot img').forEach(function (img) {
+    img.tabIndex = 0;
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', 'Ingrandisci: ' + (img.alt || 'foto'));
+    img.addEventListener('click', function () { open(img); });
+    img.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img); }
+    });
+  });
+
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay) close();
+  });
+  closeBtn.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) close();
+  });
+})();
+</script>
 </body>
 </html>

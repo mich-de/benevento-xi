@@ -304,6 +304,96 @@
 }
 
 /* ---------------------------------------------------------------------------
+   3b. Il visore — clic per ingrandire una foto
+   ---------------------------------------------------------------------------
+   Ogni foto del sito e' cliccabile: apre un visore a schermo intero con
+   l'immagine alla risoluzione piena e la stessa didascalia. Costruito con i
+   token del sistema — fondo d'inchiostro, spigoli vivi, filetto ambra —
+   cosi' non sembra un componente preso in prestito.
+   --------------------------------------------------------------------------- */
+
+.shot img { cursor: zoom-in; }
+.shot img:focus-visible { outline: none; box-shadow: var(--ring); }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 4vh 4vw;
+  background: oklch(8% 0.01 252 / .92);
+}
+.lightbox.is-open { display: flex; }
+
+.lightbox-frame {
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--ink);
+  border-top: 2px solid var(--accent);
+  box-shadow: var(--shadow-lg);
+  margin: 0;
+}
+
+.lightbox-frame img {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: #000;
+}
+
+.lightbox-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .2rem .7rem;
+  padding: .6rem .8rem;
+  color: oklch(var(--ink-fg));
+  font-size: .8rem;
+  line-height: 1.35;
+}
+.lightbox-caption:empty { display: none; }
+.lightbox-caption b { font-weight: 600; }
+.lightbox-caption .credit {
+  margin-left: auto;
+  font-size: .68rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: oklch(var(--ink-fg) / .62);
+}
+.lightbox-caption a { color: oklch(var(--ink-fg) / .62); }
+.lightbox-caption a:hover { color: var(--accent); }
+
+.lightbox-close {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  right: max(1rem, env(safe-area-inset-right));
+  width: 2.4rem;
+  height: 2.4rem;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: oklch(var(--ink-fg));
+  border: 1px solid var(--ink-line);
+  border-radius: var(--radius);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.lightbox-close:hover { color: var(--accent); border-color: oklch(var(--a) / .5); }
+.lightbox-close:focus-visible { outline: none; box-shadow: var(--ring); }
+
+@media print {
+  .lightbox { display: none !important; }
+}
+
+/* ---------------------------------------------------------------------------
    4. Stampa — tre correzioni, perche' qui il foglio e' il prodotto
    ---------------------------------------------------------------------------
    La sezione 16 nasconde .hero e i <summary>. Per uno strumento e' la scelta
