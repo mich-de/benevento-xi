@@ -196,6 +196,67 @@
 }
 
 /* ---------------------------------------------------------------------------
+   2b. I colori dei percorsi BenOriento — categorici, non semantici
+   ---------------------------------------------------------------------------
+   Il totem del Comune assegna un colore fisso a ciascuno dei cinque percorsi
+   tematici, per distinguerli sulla planimetria: e' una mappa della
+   metropolitana, non un sistema di stato. Non tocca --s ne' --a — le regole 1
+   e 2 restano intatte — sono cinque triple aggiuntive, lette da una foto del
+   totem sul posto (non da un file grafico ufficiale, quindi sono una stima a
+   occhio, non un campionamento di pixel), usate solo come striscia laterale
+   della tessera e pallino della didascalia.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --route-museale:    52% 0.075 200;  /* teal, come sul totem            */
+  --route-romano:     55% 0.16  45;   /* arancio bruciato                */
+  --route-longobardo: 48% 0.11  145;  /* verde                           */
+  --route-eccl:       40% 0.13  310;  /* viola, «pontificio ecclesiastico» */
+  --route-nobiliare:  44% 0.12  260;  /* blu, «pontificio nobiliare»     */
+}
+[data-theme="dark"] {
+  --route-museale:    68% 0.09  200;
+  --route-romano:     72% 0.15  50;
+  --route-longobardo: 66% 0.12  145;
+  --route-eccl:       64% 0.12  310;
+  --route-nobiliare:  66% 0.11  260;
+}
+
+.tile[data-route="museale"]    { --route-c: var(--route-museale); }
+.tile[data-route="romano"]     { --route-c: var(--route-romano); }
+.tile[data-route="longobardo"] { --route-c: var(--route-longobardo); }
+.tile[data-route="eccl"]       { --route-c: var(--route-eccl); }
+.tile[data-route="nobiliare"]  { --route-c: var(--route-nobiliare); }
+
+.tile[data-route] { box-shadow: inset 4px 0 0 oklch(var(--route-c)); }
+.tile[data-route]:hover { box-shadow: inset 4px 0 0 oklch(var(--route-c)), var(--shadow); }
+
+.route-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: oklch(var(--route-c));
+}
+.route-chip::before {
+  content: "";
+  width: .62em;
+  height: .62em;
+  border-radius: 50%;
+  background: oklch(var(--route-c));
+  box-shadow: 0 0 0 1px oklch(var(--route-c) / .35);
+}
+
+@media print {
+  .tile[data-route] { box-shadow: none; border-left: 2pt solid #000; }
+  .route-chip { color: #000; }
+  .route-chip::before { background: #000; box-shadow: none; }
+}
+
+/* ---------------------------------------------------------------------------
    3. La testatina su schermo largo — due colonne invece di un nastro
    ---------------------------------------------------------------------------
    Il sistema tiene il sommario a 52ch, che su un contenitore da 1240px sono
