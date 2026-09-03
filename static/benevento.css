@@ -1,0 +1,280 @@
+/* ===========================================================================
+   BENEVENTO — sopraccoperta di marca per Quadro Partenze
+   ---------------------------------------------------------------------------
+   Si carica DOPO quadro-partenze.css. La sezione 1 ridichiara soltanto i
+   token: il sistema resta intatto e aggiornabile sostituendo il file base.
+   La sezione 2 aggiunge l'unico componente che al sistema manca — la
+   fotografia — costruito con i token esistenti e con gli stessi spigoli.
+
+   I colori sono quelli di Benevento: il giallorosso. La mappatura rispetta
+   le cinque regole invece di combatterle.
+
+     rosso  -> --s   AZIONE. E' gia' il posto del rosso nel sistema.
+     giallo -> --a   SEGNALE. L'ambra diventa l'oro giallorosso: filetto
+                     sotto la testatina, anello di fuoco, cifre del flap.
+     vino   -> --p   STRUTTURA. Il registro scuro della stessa famiglia:
+                     collegamenti e testate. Sta 14 punti di chiarezza sotto
+                     --s e con meta' croma, quindi non lo si scambia per un
+                     comando: e' il rosso spento del cotto, non quello acceso
+                     del pulsante.
+
+   Il fondo resta avorio caldo (regola 5) e le fasce d'inchiostro virano al
+   vinaccia invece che al blu, cosi' anche la cornice del tabellone e' della
+   citta'. Il flap tiene oro su quasi-nero in tutti e due i temi: e' l'ancora
+   dell'identita'. Scurisce appena passando alla notte (17,5% -> 9,5%), come fa
+   il sistema base, perche' su fondo d'inchiostro una paletta chiara non
+   staccherebbe piu'; ma resta la stessa coppia di colori.
+   =========================================================================== */
+
+:root {
+  --p:  36% 0.088 22;    /* vino: struttura, collegamenti, testate           */
+  --pc: 98% 0.008 90;
+  --s:  50% 0.209 29;    /* rosso Benevento: AZIONE, e solo azione           */
+  --sc: 98% 0.008 90;
+  --a:  74% 0.158 84;    /* oro giallorosso: segnala e basta                 */
+  --ac: 22% 0.05 70;
+
+  --b1: 98.6% 0.006 84;  /* schede                                           */
+  --b2: 95.4% 0.014 82;  /* pagina                                           */
+  --b3: 90.2% 0.021 78;
+  --bc: 22%   0.021 45;  /* inchiostro caldo, appena virato al mattone       */
+
+  /* Semantici: --er resta rosso perche' un errore e' rosso ovunque, ma sta
+     piu' scuro e piu' cupo di --s per non farsi leggere come un pulsante. */
+  --in: 47% 0.115 240;
+  --su: 46% 0.105 150;
+  --wa: 62% 0.135 72;
+  --er: 45% 0.185 18;
+
+  /* Le fasce d'inchiostro: vinaccia quasi nero, non blu-nero. */
+  --ink: oklch(19.5% 0.03 22);
+  --ink-fg: 94% 0.014 84;
+  --ink-line: oklch(100% 0 0 / .14);
+
+  /* Il flap: oro su quasi-nero. Identico nei due temi, per contratto. */
+  --flap: oklch(17.5% 0.026 22);
+  --flap-ink: oklch(86% 0.152 88);
+}
+
+[data-theme="dark"] {
+  --p:  73% 0.095 26;
+  --pc: 16% 0.022 25;
+  --s:  66% 0.19  29;
+  --sc: 16% 0.022 25;
+  --a:  82% 0.152 86;
+  --ac: 16% 0.03  60;
+
+  --b1: 20%   0.016 26;
+  --b2: 14.5% 0.014 26;
+  --b3: 27.5% 0.02  26;
+  --bc: 92%   0.013 84;
+
+  --in: 71% 0.105 240;
+  --su: 71% 0.125 152;
+  --wa: 81% 0.13  74;
+  --er: 67% 0.165 22;
+
+  --ink: oklch(11% 0.02 22);
+  --ink-fg: 93% 0.013 84;
+
+  --flap: oklch(9.5% 0.014 22);
+  --flap-ink: oklch(85% 0.15 88);
+}
+
+/* ---------------------------------------------------------------------------
+   1b. L'anello di fuoco — l'unica correzione al sistema
+   ---------------------------------------------------------------------------
+   Misurato: l'ambra del sistema base a .85 sul fondo avorio da' 2,29:1, e il
+   nostro oro, piu' chiaro, scende a 1,98:1. Sotto il 3:1 che l'indicatore di
+   fuoco richiede. Non e' un difetto introdotto qui — e' che un ambra chiaro su
+   un avorio chiaro non puo' funzionare, e schiarendolo per farlo giallorosso
+   l'ho peggiorato.
+
+   L'anello pero' deve reggere su tre fondi diversi: la scheda (98,6%), la
+   pagina (95,4%) e la testata scura (19,5%), perche' il commutatore del tema
+   sta li' dentro. La finestra in cui un solo colore ce la fa e' stretta, fra il
+   56% e il 60% di chiarezza; 58% con croma 0,121 e' il punto piu' saturo che
+   resta dentro il gamut sRGB, e da' 3,55 / 3,27 / 3,65.
+
+   Resta ambra — e' oro scurito, non un colore nuovo — quindi la regola 2 tiene:
+   segnala e basta. Al tema scuro non serve nulla, l'ambra chiara sul fondo
+   d'inchiostro e' gia' a 8,5:1, e infatti li' --ring-a torna a essere --a.
+   --------------------------------------------------------------------------- */
+
+:root { --ring-a: 58% 0.121 78; }
+[data-theme="dark"] { --ring-a: var(--a); }
+
+/* Ridichiarato una volta sola: --ring-a e' sostituito pigramente, quindi il
+   tema scuro eredita questa riga e ci mette dentro la propria ambra. */
+:root {
+  --ring: 0 0 0 2px var(--ring-gap), 0 0 0 4px oklch(var(--ring-a) / .9);
+}
+
+/* ---------------------------------------------------------------------------
+   2. La fotografia — targa, non cartolina
+   ---------------------------------------------------------------------------
+   Una foto in un tabellone e' una targa applicata: filo sottile, spigoli vivi,
+   e sotto la fascia d'inchiostro con la didascalia. La firma dell'autore sta
+   nella stessa fascia perche' su Commons l'attribuzione e' una condizione di
+   licenza, non un ringraziamento: se sta in fondo alla pagina si perde al
+   primo ritaglio.
+   --------------------------------------------------------------------------- */
+
+.shot {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--base-200);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+  background: var(--base-300);
+}
+
+/* Sotto la testatina la foto e' larga e bassa: fa da orizzonte, non da soggetto. */
+.shot-wide img { aspect-ratio: 21 / 8; }
+.shot-tall img { aspect-ratio: 3 / 4; }
+
+.shot figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .2rem .7rem;
+  padding: .5rem .7rem;
+  background: var(--ink);
+  color: oklch(var(--ink-fg));
+  font-size: .78rem;
+  line-height: 1.35;
+  border-top: 2px solid var(--accent);
+}
+
+.shot figcaption b { font-weight: 600; }
+
+.shot figcaption .credit {
+  margin-left: auto;
+  font-size: .68rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: oklch(var(--ink-fg) / .62);
+}
+
+.shot figcaption a { color: oklch(var(--ink-fg) / .62); }
+.shot figcaption a:hover { color: var(--accent); }
+
+/* Dentro una tessera la foto va a filo dei bordi: la cornice ce l'ha gia' la
+   tessera, e due filetti a mezzo millimetro l'uno dall'altro fanno sporco. */
+.tile > .shot:first-child {
+  margin: -1rem -1.1rem .9rem;   /* pari al padding di .tile: 1rem 1.1rem */
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Su carta la foto non aiuta a orientarsi e mangia il toner: resta solo dove
+   e' contenuto (la targa dell'itinerario), rimpicciolita, e mai spezzata. */
+@media print {
+  .shot { break-inside: avoid; box-shadow: none; }
+  .shot img { aspect-ratio: 16 / 9; }
+  .shot figcaption { background: #fff; color: #000; border-top: 1px solid #999; }
+  .shot figcaption .credit { color: #555; }
+  .shot-wide { display: none; }
+
+  /* La sezione 16 fa stampare a ogni link il proprio indirizzo, ed e' giusto:
+     un link su carta senza indirizzo non porta da nessuna parte. Ma qui il
+     link e' la firma di licenza, e novanta caratteri di URL sotto ogni foto
+     coprirebbero la didascalia. L'attribuzione resta comunque completa —
+     autore e licenza sono scritti in chiaro — quindi si toglie solo l'URL. */
+  .shot figcaption a[href^="http"]::after { content: none; }
+}
+
+/* ---------------------------------------------------------------------------
+   3. La testatina su schermo largo — due colonne invece di un nastro
+   ---------------------------------------------------------------------------
+   Il sistema tiene il sommario a 52ch, che su un contenitore da 1240px sono
+   poco piu' di un terzo della larghezza: il titolo e il paragrafo si
+   accalcano a sinistra e i due terzi a destra restano vuoti. Su una scheda e'
+   corretto — una colonna di lettura non si allarga oltre le sessanta battute
+   o l'occhio perde la riga — ma la testatina non e' testo da leggere a lungo:
+   sono tre righe di presentazione, e quel vuoto la fa sembrare un ritaglio
+   incollato in un angolo.
+
+   La soluzione non e' centrare: un tabellone non centra niente, e la
+   bandiera a sinistra e' cio' che rende leggibile una colonna di orari. E'
+   affiancare, con la stessa proporzione 7/5 che il sistema usa gia' per
+   .split — il titolo comanda, il sommario fa da spalla — e separare le due
+   colonne con un filetto verticale, che e' il modo in cui i cartelli
+   dividono i campi. Il paragrafo si allinea in basso al titolo, cosi' le due
+   colonne poggiano sulla stessa linea invece di galleggiare.
+
+   Stessa soglia del sistema (900px) e stessa proporzione: sotto quella
+   larghezza tutto torna impilato, dove il nastro stretto e' giusto.
+   `screen and` e' necessario, o la regola si applicherebbe anche alla carta.
+   --------------------------------------------------------------------------- */
+
+@media screen and (min-width: 900px) {
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    column-gap: 2.2rem;
+  }
+  /* L'occhiello si tiene la sua riga da solo, stretta. Titolo e sommario
+     stanno nella seconda e poggiano tutti e due sul fondo: cosi' la riga
+     cresce quanto serve al testo piu' lungo senza allontanare l'occhiello dal
+     titolo, che e' quello che succederebbe se il paragrafo scavalcasse le due
+     righe. */
+  .hero .eyebrow { grid-column: 1 / -1; grid-row: 1; }
+  .hero h1       { grid-column: 1; grid-row: 2; align-self: end; margin-bottom: 0; }
+  .hero p {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: end;
+    max-width: none;
+    padding-left: 2.2rem;
+    border-left: 1px solid var(--line);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   4. Stampa — tre correzioni, perche' qui il foglio e' il prodotto
+   ---------------------------------------------------------------------------
+   La sezione 16 nasconde .hero e i <summary>. Per uno strumento e' la scelta
+   giusta: li' la testatina e' un'insegna e il summary e' un «mostra altro»,
+   cioe' due comandi, e i comandi su carta non servono. Qui invece sono
+   contenuto — il titolo con la data, e le sei righe che dicono di che parla il
+   paragrafo sotto. Nasconderli lascia mezza pagina di testo senza intestazione.
+
+   La terza correzione riguarda i badge. In stampa diventano tutti bianchi con
+   filetto grigio, quindi «verificato» e «incerto» finiscono identici: proprio
+   la distinzione su cui questa pagina si regge sparisce nel momento in cui la
+   si porta in giro. Un segno davanti alla parola la ricostruisce anche in
+   bianco e nero, senza toner e senza colore.
+   --------------------------------------------------------------------------- */
+
+@media print {
+  .hero { display: block !important; margin-bottom: 6mm; padding-bottom: 3mm;
+          border-bottom: 1pt solid #000; }
+  /* L'entrata sfalsata e' un movimento d'apertura: su carta l'apertura non
+     esiste, e con i fill-mode la stampa puo' cogliere il primo fotogramma. */
+  .hero .eyebrow, .hero h1, .hero p { animation: none; }
+  .hero h1 { font-size: 1.5rem; margin: 0 0 .4rem; }
+  .hero h1 em { background: none; }   /* la fascia ambra diventerebbe grigia */
+  .hero p { color: #333; max-width: none; }
+  .hero .eyebrow { color: #444; }
+  .hero .eyebrow::before, .hero::after { background: #000; }
+
+  details > summary { display: list-item !important; list-style: none;
+                      color: #000; margin-bottom: .3rem; }
+
+  .badge-success::before { content: "\2713\A0"; }   /* ✓ */
+  .badge-warning::before { content: "?\A0"; }
+  .badge-error::before   { content: "!\A0"; font-weight: 700; }
+  .badge-error { border-width: 1pt !important; }
+}
