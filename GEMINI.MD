@@ -24,3 +24,6 @@
   - **Tooling & Setup [DevOps-Agent]**:
     - Creato `package.json` con metadati e script di esecuzione locale (`npm run dev`) e deploy su Vercel (`npm run deploy`).
     - Redatti `IMPLEMENTATION_PLAN.MD`, `TASKS.MD`, `GEMINI.MD` e `README.MD`.
+  - **Feature Stampa / PDF Offline [Frontend-Agent]**:
+    - Aggiunto pulsante `Stampa` nell'header e pulsante rapido `⎙ Salva PDF / Stampa` nella sezione `#piano`.
+    - Integrato handler Vanilla JS `window.print()` mantenendo piena coerenza con gli stili `@media print` che nascondono controlli, pulsanti, lightbox e preservano il toner.

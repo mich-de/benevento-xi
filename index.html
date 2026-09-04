@@ -49,9 +49,15 @@
       <a href="#clinica">Clinica</a>
     </nav>
 
-    <button class="btn btn-ghost btn-sm no-print" type="button" id="theme-toggle">
-      <span id="theme-label">Notte</span>
-    </button>
+    <div class="site-header-actions no-print" style="display:inline-flex; align-items:center; gap:.5rem;">
+      <button class="btn btn-ghost btn-sm" type="button" id="print-btn" title="Stampa o salva la guida in PDF">
+        <span id="print-label">Stampa</span>
+      </button>
+
+      <button class="btn btn-ghost btn-sm" type="button" id="theme-toggle">
+        <span id="theme-label">Notte</span>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -97,6 +103,9 @@
         <span class="section-icon" aria-hidden="true">◷</span>
         <h2>Un giorno, o due</h2>
         <span class="badge badge-primary">il piano</span>
+        <button class="btn btn-ghost btn-sm no-print" type="button" onclick="window.print()" style="margin-left:auto; font-size:.78rem;" title="Salva o stampa l'itinerario">
+          <span>⎙ Salva PDF / Stampa</span>
+        </button>
       </div>
 
       <p class="small muted" style="margin-top:0">
@@ -2457,6 +2466,13 @@
 
 <script>
 (function () {
+  var printBtn = document.getElementById('print-btn');
+  if (printBtn) {
+    printBtn.addEventListener('click', function () {
+      window.print();
+    });
+  }
+
   var btn = document.getElementById('theme-toggle');
   var label = document.getElementById('theme-label');
   function sync() {

@@ -14,5 +14,5 @@
 - [x] [BACKEND] Verifica calendario sagre e manifestazioni (Sagra del Maialetto di Apollosa 11–13 settembre 2026).
 - [x] [DEVOPS] Configurazione `package.json` con script `dev`, `start` e `deploy`.
 - [x] [DEVOPS] Creazione e allineamento della documentazione dinamica di progetto (`IMPLEMENTATION_PLAN.MD`, `TASKS.MD`, `GEMINI.MD`, `README.MD`).
-- [ ] [FRONTEND] Aggiunta pulsante rapido "Stampa / Salva in PDF" con stile ottimizzato per promemoria offline su carta.
+- [x] [FRONTEND] Aggiunta pulsante rapido "Stampa / Salva in PDF" con stile ottimizzato per promemoria offline su carta.
 - [ ] [DEVOPS] Monitoraggio e verifica continua del deployment su Vercel (`benevento-xi.vercel.app`).
