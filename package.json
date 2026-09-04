@@ -1,0 +1,20 @@
+{
+  "name": "benevento-xi",
+  "version": "1.0.0",
+  "description": "Benevento in uno o due giorni — Guida a piedi, BenOriento e itinerari Sol & Local",
+  "private": true,
+  "scripts": {
+    "dev": "npx serve .",
+    "start": "npx serve .",
+    "deploy": "npx vercel --prod"
+  },
+  "keywords": [
+    "benevento",
+    "travel-guide",
+    "sol-and-local",
+    "benoriento",
+    "campania"
+  ],
+  "author": "mich-de <mic.deangelis@gmail.com>",
+  "license": "MIT"
+}
